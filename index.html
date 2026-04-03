@@ -339,7 +339,6 @@
     .ballot-unit               { font-size: .85rem; font-weight: 700; }
     .status-dot                { width: 12px; height: 12px; }
 
-    /* Table fills remaining space */
     .ballot-list {
         flex: 1 1 auto;
         display: table;
@@ -353,7 +352,6 @@
         display: table-row-group;
     }
 
-    /* ALL rows — even height, no flex tricks */
     .ballot-list tr {
         display: table-row;
         height: auto;
@@ -365,7 +363,6 @@
         padding: 4px 3px;
     }
 
-    /* Column widths */
     .col-num    { width: 28px; font-size: .8rem; text-align: center; padding-left: 5px !important; }
     .col-info   { }
     .col-photo  { width: 36px; }
@@ -373,8 +370,6 @@
     .col-led    { width: 24px; text-align: center; }
     .col-btn    { width: 60px; text-align: right; padding-right: 6px !important; }
 
-    /* Empty rows */
-    /* Empty rows — very compact */
     .compact-row td { padding: 2px 3px; }
     .compact-row .led {
         width: 10px; height: 10px; border-width: 1px;
@@ -387,56 +382,51 @@
     }
     .compact-row .col-num { font-size: .66rem; }
 
-    /* Candidate photo avatar in empty rows — hide */
     .compact-row .photo-avatar { display: none; }
 
-    /* Candidate row 7 */
     /* Candidate row 7 — bigger */
-    #row-1 td { padding: 14px 3px; }
+    #row-1 td { padding: 10px 2px; }
+
+    #row-1 td.col-num    { width: 28px; padding-left: 5px !important; }
+    #row-1 td.col-info   { width: 105px; }
+    #row-1 td.col-photo  { width: 46px; padding: 10px 2px; }
+    #row-1 td.col-symbol { width: 44px; padding: 10px 2px; }
+    #row-1 td.col-led    { width: 24px; }
+    #row-1 td.col-btn    { width: 60px; padding-right: 6px !important; }
 
     #row-1 .photo-avatar {
-        width: 54px !important;
-        height: 54px !important;
+        width: 42px !important;
+        height: 42px !important;
         border-radius: 4px;
     }
 
-   #row-1 td.col-info   { width: 110px; }   /* ← pin the name column */
-#row-1 td.col-photo  { width: 56px; }    /* ← slightly narrower photo cell */
-#row-1 td.col-symbol { width: 48px; }
-
-#row-1 .photo-avatar {
-    width: 46px !important;
-    height: 46px !important;
-}
-
     #row-1 td.col-symbol img {
-    width: 40px !important;
-    height: 40px !important;
-}
+        width: 38px !important;
+        height: 38px !important;
+    }
 
     #row-1 .candidate-name {
-        font-size: 1rem;
+        font-size: .9rem;
         line-height: 1.4;
         font-weight: 700;
     }
 
     #row-1 td.col-info div:not(.candidate-name) {
-        font-size: .72rem !important;
+        font-size: .68rem !important;
         color: #666;
         margin-top: 3px;
     }
 
-    #row-1 .led { width: 18px; height: 18px; border-width: 2px; }
+    #row-1 .led { width: 16px; height: 16px; border-width: 2px; }
 
     #row-1 .vote-btn {
-        padding: 16px 8px;
-        font-size: .78rem;
+        padding: 14px 6px;
+        font-size: .75rem;
         border-radius: 8px;
         width: 100%;
         font-weight: 700;
     }
 
-    /* Footer */
     .evm-footer {
         padding: 8px 12px;
         flex-shrink: 0;
