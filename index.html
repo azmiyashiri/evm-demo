@@ -367,7 +367,7 @@
 
     /* Column widths */
     .col-num    { width: 28px; font-size: .8rem; text-align: center; padding-left: 5px !important; }
-    .col-info   { }
+    .col-info { min-width: 0; }
     .col-photo  { width: 36px; }
     .col-symbol { width: 36px; }
     .col-led    { width: 24px; text-align: center; }
@@ -395,13 +395,12 @@
     #row-1 td { padding: 14px 3px; }
 
     #row-1 .photo-avatar {
-        width: 54px !important;
-        height: 54px !important;
-        border-radius: 4px;
-    }
+    width: 48px !important;
+    height: 48px !important;
+}
 
-    #row-1 td.col-photo { width: 64px; }
-    #row-1 td.col-symbol { width: 52px; }
+    #row-1 td.col-photo { width: 58px; padding-right: 6px !important; }
+#row-1 td.col-symbol { width: 56px; padding-left: 4px !important; }
 
     #row-1 td.col-symbol img {
         width: 46px !important;
