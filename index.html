@@ -374,63 +374,71 @@
     .col-btn    { width: 60px; text-align: right; padding-right: 6px !important; }
 
     /* Empty rows */
-    .compact-row td { padding: 5px 3px; }
+    /* Empty rows — very compact */
+    .compact-row td { padding: 2px 3px; }
     .compact-row .led {
-        width: 12px; height: 12px; border-width: 1px;
+        width: 10px; height: 10px; border-width: 1px;
     }
     .compact-row .vote-btn {
-        padding: 7px 6px;
-        font-size: .6rem;
-        border-radius: 6px;
+        padding: 5px 6px;
+        font-size: .58rem;
+        border-radius: 5px;
         width: 100%;
     }
-    .compact-row .col-num { font-size: .72rem; }
+    .compact-row .col-num { font-size: .66rem; }
 
     /* Candidate photo avatar in empty rows — hide */
     .compact-row .photo-avatar { display: none; }
 
     /* Candidate row 7 */
-    #row-1 td { padding: 6px 3px; }
+    /* Candidate row 7 — bigger */
+    #row-1 td { padding: 14px 3px; }
 
     #row-1 .photo-avatar {
-        width: 40px !important;
-        height: 40px !important;
+        width: 58px !important;
+        height: 58px !important;
         border-radius: 4px;
     }
 
+    #row-1 td.col-photo { width: 64px; }
+    #row-1 td.col-symbol { width: 52px; }
+
     #row-1 td.col-symbol img {
-        width: 34px !important;
-        height: 34px !important;
+        width: 46px !important;
+        height: 46px !important;
     }
 
     #row-1 .candidate-name {
-        font-size: .82rem;
-        line-height: 1.3;
+        font-size: 1rem;
+        line-height: 1.4;
+        font-weight: 700;
     }
 
     #row-1 td.col-info div:not(.candidate-name) {
-        font-size: .62rem !important;
+        font-size: .72rem !important;
         color: #666;
-        margin-top: 1px;
+        margin-top: 3px;
     }
 
-    #row-1 .led { width: 14px; height: 14px; }
+    #row-1 .led { width: 18px; height: 18px; border-width: 2px; }
 
     #row-1 .vote-btn {
-        padding: 9px 6px;
-        font-size: .68rem;
-        border-radius: 7px;
+        padding: 16px 8px;
+        font-size: .78rem;
+        border-radius: 8px;
         width: 100%;
+        font-weight: 700;
     }
 
     /* Footer */
+    /* Footer */
     .evm-footer {
-        padding: 8px 12px;
+        padding: 10px 12px;
         flex-shrink: 0;
     }
     .share-btn {
-        font-size: .82rem;
-        padding: 10px 14px;
+        font-size: .88rem;
+        padding: 12px 14px;
         border-radius: 22px;
     }
 }
