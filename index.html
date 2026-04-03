@@ -310,7 +310,7 @@
             /* fill exactly the viewport */
             height: 100%;
             gap: 0;
-            justify-content: space-between;
+            justify-content: flex-start;
         }
 
         .evm-machine {
@@ -342,11 +342,10 @@
 
         /* table fills remaining space evenly */
         .ballot-list {
-    flex: 1 1 auto;
-    display: table;
-    height: 100%;
-    table-layout: fixed;
-}
+            flex: 1 1 auto;
+            display: table;   /* keep table layout */
+            height: 100%;
+        }
 
         /* all cells very tight */
         .ballot-list td { padding: 0px 3px; }
@@ -422,11 +421,7 @@
 
 
         .page { display: none; }
-        .page.active {
-    display: flex;
-    width: 100%;
-    height: 100dvh;
-}
+        .page.active { display: flex; }
 
         .confirmation-wrap {
             width: 100%;
@@ -455,7 +450,7 @@
 <!-- ══════════════════════════════════
      PAGE 1: BALLOT
 ══════════════════════════════════ -->
-<div id="page-ballot" class="page active">
+<div id="page-ballot" class="page active" style="width:100%;justify-content:center;padding:12px;">
     <div class="evm-wrapper">
         <div class="evm-header">EVM DEMO</div>
         <div class="evm-machine">
