@@ -374,53 +374,64 @@
     .col-btn    { width: 60px; text-align: right; padding-right: 6px !important; }
 
     /* Empty rows */
-    .compact-row td { padding: 5px 3px; }
+    /* Empty rows — very compact */
+    .compact-row td { padding: 2px 3px; }
     .compact-row .led {
-        width: 12px; height: 12px; border-width: 1px;
+        width: 10px; height: 10px; border-width: 1px;
     }
     .compact-row .vote-btn {
-        padding: 7px 6px;
-        font-size: .6rem;
-        border-radius: 6px;
+        padding: 5px 6px;
+        font-size: .56rem;
+        border-radius: 5px;
         width: 100%;
     }
-    .compact-row .col-num { font-size: .72rem; }
+    .compact-row .col-num { font-size: .68rem; }
 
     /* Candidate photo avatar in empty rows — hide */
     .compact-row .photo-avatar { display: none; }
 
-    /* Candidate row 7 */
-    #row-1 td { padding: 6px 3px; }
+    /* Candidate row 7 — bigger, like desktop */
+    #row-1 td { padding: 10px 3px; }
 
     #row-1 .photo-avatar {
-        width: 40px !important;
-        height: 40px !important;
+        width: 55px !important;
+        height: 55px !important;
         border-radius: 4px;
     }
 
+    #row-1 td.col-photo {
+        width: 60px;
+    }
+
+    #row-1 td.col-symbol {
+        width: 50px;
+    }
+
     #row-1 td.col-symbol img {
-        width: 34px !important;
-        height: 34px !important;
+        width: 46px !important;
+        height: 46px !important;
     }
 
     #row-1 .candidate-name {
-        font-size: .82rem;
-        line-height: 1.3;
+        font-size: .95rem;
+        line-height: 1.4;
+        font-weight: 700;
     }
 
     #row-1 td.col-info div:not(.candidate-name) {
-        font-size: .62rem !important;
+        font-size: .72rem !important;
         color: #666;
-        margin-top: 1px;
+        margin-top: 2px;
     }
 
-    #row-1 .led { width: 14px; height: 14px; }
+    #row-1 .led { width: 16px; height: 16px; }
 
     #row-1 .vote-btn {
-        padding: 9px 6px;
-        font-size: .68rem;
-        border-radius: 7px;
+        padding: 14px 8px;
+        font-size: .78rem;
+        border-radius: 8px;
         width: 100%;
+        background: #0a2d6e;
     }
 
     /* Footer */
@@ -437,14 +448,16 @@
     /* Extra-small phones (≤ 360 px) */
     @media (max-width: 360px) {
     .evm-header { font-size: .9rem; letter-spacing: 1.5px; }
-    .col-num    { width: 22px; font-size: .68rem; }
+    .col-num    { width: 22px; font-size: .65rem; }
     .col-btn    { width: 52px; }
-    .compact-row .vote-btn { font-size: .55rem; padding: 6px 4px; }
+    .compact-row td { padding: 1px 3px; }
+    .compact-row .vote-btn { font-size: .52rem; padding: 4px 4px; }
     .share-btn  { font-size: .72rem; }
-    #row-1 .candidate-name   { font-size: .74rem; }
-    #row-1 .photo-avatar     { width: 34px !important; height: 34px !important; }
-    #row-1 td.col-symbol img { width: 28px !important; height: 28px !important; }
-    #row-1 .vote-btn         { padding: 8px 4px; font-size: .62rem; }
+    #row-1 td   { padding: 8px 3px; }
+    #row-1 .candidate-name   { font-size: .82rem; }
+    #row-1 .photo-avatar     { width: 44px !important; height: 44px !important; }
+    #row-1 td.col-symbol img { width: 38px !important; height: 38px !important; }
+    #row-1 .vote-btn         { padding: 11px 6px; font-size: .68rem; }
 }
 
 
