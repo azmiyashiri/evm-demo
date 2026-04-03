@@ -161,10 +161,18 @@
     .vote-btn:active { transform: scale(.96); }
 
     /* Compact empty rows */
-    .compact-row td        { padding: 5px 6px; }
-    .compact-row .led      { width: 12px; height: 12px; }
-    .compact-row .vote-btn { padding: 8px 18px; }
-    .compact-row .col-num  { font-size: .8rem; }
+    /* Empty rows — very compact */
+    .compact-row td { padding: 2px 3px; }
+    .compact-row .led {
+        width: 10px; height: 10px; border-width: 1px;
+    }
+    .compact-row .vote-btn {
+        padding: 5px 6px;
+        font-size: .58rem;
+        border-radius: 5px;
+        width: 100%;
+    }
+    .compact-row .col-num { font-size: .66rem; }
 
     /* ── Footer ── */
     .evm-footer {
@@ -366,13 +374,12 @@
     }
 
     /* Column widths */
-    .col-num    { width: 28px; font-size: .8rem; text-align: center; padding-left: 5px !important; }
+    .col-num    { width: 26px; font-size: .8rem; text-align: center; padding-left: 5px !important; }
     .col-info   { }
     .col-photo  { width: 36px; }
     .col-symbol { width: 36px; }
-    .col-led    { width: 24px; text-align: center; }
-    .col-btn    { width: 60px; text-align: right; padding-right: 6px !important; }
-
+    .col-led    { width: 22px; text-align: center; }
+    .col-btn    { width: 58px; text-align: right; padding-right: 5px !important; }
     /* Empty rows */
     /* Empty rows — very compact */
     .compact-row td { padding: 2px 3px; }
@@ -395,17 +402,17 @@
     #row-1 td { padding: 14px 3px; }
 
     #row-1 .photo-avatar {
-        width: 58px !important;
-        height: 58px !important;
+        width: 52px !important;
+        height: 52px !important;
         border-radius: 4px;
     }
 
-    #row-1 td.col-photo { width: 64px; }
-    #row-1 td.col-symbol { width: 52px; }
+    #row-1 td.col-photo { width: 62px; padding-right: 0 !important; }
+    #row-1 td.col-symbol { width: 56px; padding-left: 2px !important; padding-right: 0 !important; }
 
     #row-1 td.col-symbol img {
-        width: 46px !important;
-        height: 46px !important;
+        width: 40px !important;
+        height: 40px !important;
     }
 
     #row-1 .candidate-name {
