@@ -298,130 +298,166 @@
     ══════════════════════════════════════════ */
     @media (max-width: 480px) {
 
-        body {
-            /* use full viewport height; content must fit inside */
-            height: 100dvh;
-            padding: 5px;
-            align-items: flex-start;
-            overflow: hidden;   /* prevent page scroll */
-        }
-
-        .evm-wrapper {
-            /* fill exactly the viewport */
-            height: 100%;
-            gap: 0;
-            justify-content: flex-start;
-        }
-
-        .evm-machine {
-            /* let the machine card fill remaining height */
-            flex: 1 1 auto;
-            display: flex;
-            flex-direction: column;
-            border-radius: 14px;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        /* header */
-        .evm-header {
-            font-size: .9rem;
-            letter-spacing: 2px;
-            padding: 5px 0 3px;
-            flex-shrink: 0;
-        }
-
-        /* status bar */
-        .evm-status {
-            padding: 5px 10px;
-            flex-shrink: 0;
-        }
-        .evm-status .status-label { font-size: .68rem; gap: 5px; }
-        .ballot-unit               { font-size: .68rem; }
-        .status-dot                { width: 9px; height: 9px; }
-
-        /* table fills remaining space evenly */
-        .ballot-list {
-            flex: 1 1 auto;
-            display: table;   /* keep table layout */
-            height: 100%;
-        }
-
-        /* all cells very tight */
-        .ballot-list td { padding: 0px 3px; }
-
-        .col-num    { width: 20px; font-size: .68rem; padding-left: 3px; }
-        .col-photo  { width: 30px; }
-        .col-symbol { width: 30px; }
-        .col-led    { width: 20px; }
-        .col-btn    { width: 54px; padding-right: 5px; }
-
-        /* empty compact rows */
-        .compact-row td        { padding: 0px 3px; }
-        .compact-row .led      { width: 9px; height: 9px; border-width: 1px; }
-        .compact-row .vote-btn {
-            padding: 5px 6px;
-            font-size: .58rem;
-            border-radius: 5px;
-            min-width: 0;
-            width: 100%;
-        }
-        .compact-row .col-num  { font-size: .6rem; }
-
-        /* real candidate row — a little more room */
-        #row-1 td { padding: 4px 3px; }
-
-        .photo-avatar { width: 32px; height: 32px; }
-        #row-1 .photo-avatar { width: 36px; height: 36px; }
-
-        #row-1 td.col-symbol img { width: 28px; height: 28px; }
-
-        .candidate-name        { font-size: .65rem; }
-        #row-1 .candidate-name { font-size: .72rem; }
-
-        /* subname */
-        #row-1 td.col-info div:not(.candidate-name) {
-            font-size: .58rem !important;
-            color: #666;
-            margin-top: 1px;
-        }
-
-        .led       { width: 11px; height: 11px; border-width: 1px; }
-        #row-1 .led{ width: 13px; height: 13px; }
-
-        .vote-btn {
-            padding: 6px 7px;
-            font-size: .62rem;
-            border-radius: 6px;
-            width: 100%;
-        }
-
-        /* footer */
-        .evm-footer {
-            padding: 6px 10px;
-            flex-shrink: 0;
-        }
-        .share-btn {
-            font-size: .72rem;
-            padding: 8px 12px;
-            border-radius: 20px;
-            letter-spacing: 0;
-        }
+    body {
+        height: 100dvh;
+        padding: 4px;
+        align-items: stretch;
+        overflow: hidden;
     }
+
+    .evm-wrapper {
+        height: 100dvh;
+        gap: 0;
+        justify-content: flex-start;
+    }
+
+    .evm-machine {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        border-radius: 14px;
+        width: 100%;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .evm-header {
+        font-size: 1rem;
+        letter-spacing: 2px;
+        padding: 7px 0 4px;
+        flex-shrink: 0;
+    }
+
+    .evm-status {
+        padding: 6px 12px;
+        flex-shrink: 0;
+    }
+    .evm-status .status-label { font-size: .78rem; gap: 5px; }
+    .ballot-unit               { font-size: .78rem; }
+    .status-dot                { width: 10px; height: 10px; }
+
+    /* Table fills remaining space */
+    .ballot-list {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+    }
+
+    .ballot-list tbody {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+    }
+
+    /* Empty rows — small fixed height */
+    .empty-row {
+        display: flex;
+        flex: 0 0 auto;
+        height: 44px;
+        width: 100%;
+        align-items: center;
+    }
+
+    /* Candidate row 7 — takes all remaining space */
+    #row-1 {
+        display: flex;
+        flex: 1 1 auto;
+        width: 100%;
+        align-items: center;
+    }
+
+    /* Make all td behave inline in flex rows */
+    .ballot-list tr td {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px 3px;
+    }
+
+    .col-num    { width: 22px; font-size: .72rem; padding-left: 4px !important; justify-content: center; }
+    .col-info   { flex: 1; justify-content: flex-start !important; }
+    .col-photo  { width: 38px; }
+    .col-symbol { width: 38px; }
+    .col-led    { width: 22px; }
+    .col-btn    { width: 62px; padding-right: 6px !important; }
+
+    /* Empty row content sizing */
+    .compact-row .led {
+        width: 10px; height: 10px; border-width: 1px;
+    }
+    .compact-row .vote-btn {
+        padding: 5px 6px;
+        font-size: .58rem;
+        border-radius: 5px;
+        width: 100%;
+    }
+    .compact-row .col-num { font-size: .66rem; }
+
+    /* Candidate row sizing */
+    #row-1 td { padding: 4px 3px; }
+
+    #row-1 .photo-avatar {
+        width: 56px !important;
+        height: 56px !important;
+    }
+
+    #row-1 td.col-symbol img {
+        width: 50px !important;
+        height: 50px !important;
+    }
+
+    #row-1 .candidate-name { font-size: .92rem; }
+
+    #row-1 td.col-info div:not(.candidate-name) {
+        font-size: .65rem !important;
+        color: #666;
+        margin-top: 2px;
+    }
+
+    #row-1 .led { width: 15px; height: 15px; }
+
+    #row-1 .vote-btn {
+        padding: 12px 8px;
+        font-size: .78rem;
+        border-radius: 7px;
+        width: 100%;
+    }
+
+    /* Footer */
+    .evm-footer {
+        padding: 7px 10px;
+        flex-shrink: 0;
+    }
+    .share-btn {
+        font-size: .78rem;
+        padding: 9px 12px;
+        border-radius: 20px;
+    }
+}
 
     /* Extra-small phones (≤ 360 px) */
     @media (max-width: 360px) {
-        .evm-header  { font-size: .78rem; letter-spacing: 1.5px; }
-        .col-num     { width: 16px; font-size: .6rem; }
-        .col-btn     { width: 46px; }
-        .vote-btn    { font-size: .55rem; padding: 5px 5px; }
-        .share-btn   { font-size: .65rem; }
-        #row-1 .candidate-name { font-size: .65rem; }
-    }
+    .evm-header { font-size: .85rem; letter-spacing: 1.5px; }
+    .empty-row  { height: 38px !important; }
+    .col-num    { width: 18px; font-size: .62rem; }
+    .col-btn    { width: 52px; }
+    .vote-btn   { font-size: .58rem; padding: 5px 5px; }
+    .share-btn  { font-size: .68rem; }
+    #row-1 .candidate-name      { font-size: .8rem; }
+    #row-1 .photo-avatar        { width: 46px !important; height: 46px !important; }
+    #row-1 td.col-symbol img    { width: 40px !important; height: 40px !important; }
+}
 
 
         .page { display: none; }
-        .page.active { display: flex; }
+        .page.active {
+    display: flex;
+    width: 100%;
+    height: 100dvh;
+}
 
         .confirmation-wrap {
             width: 100%;
@@ -450,7 +486,7 @@
 <!-- ══════════════════════════════════
      PAGE 1: BALLOT
 ══════════════════════════════════ -->
-<div id="page-ballot" class="page active" style="width:100%;justify-content:center;padding:12px;">
+<div id="page-ballot" class="page active">
     <div class="evm-wrapper">
         <div class="evm-header">EVM DEMO</div>
         <div class="evm-machine">
