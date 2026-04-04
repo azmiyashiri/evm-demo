@@ -4,475 +4,354 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EVM DEMO</title>
-    <style>
+    <style>/* ── Reset & base ── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-        --evm-blue:   #1a4b8c;
-        --evm-blue2:  #2563a8;
-        --btn-blue:   #1e5799;
-        --red-light:  #c0392b;
-        --red-active: #ff2222;
-        --bg:         #f0f2f5;
-        --card-bg:    #ffffff;
-        --border:     #d0d4da;
-        --text:       #1a1a2e;
-        --teal:       #0d9488;
-        --success:    #16a34a;
-        --purple:     #7c3aed;
-    }
+        :root {
+            --evm-blue:   #1a4b8c;
+            --evm-blue2:  #2563a8;
+            --btn-blue:   #1e5799;
+            --red-light:  #c0392b;
+            --red-active: #ff2222;
+            --bg:         #f0f2f5;
+            --card-bg:    #ffffff;
+            --border:     #d0d4da;
+            --text:       #1a1a2e;
+            --teal:       #0d9488;
+            --success:    #16a34a;
+            --purple:     #7c3aed;
+        }
 
-    html, body { height: 100%; }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
-    body {
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-        background: var(--bg);
-        min-height: 100vh;
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-        padding: 12px;
-    }
+        /* ── EVM Machine wrapper ── */
+        .evm-wrapper {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
 
-    /* ── EVM Machine wrapper ── */
-    .evm-wrapper {
-        width: 100%;
-        max-width: 600px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-    }
+        .evm-machine {
+            background: var(--card-bg);
+            border-radius: 18px;
+            box-shadow: 0 8px 40px rgba(0,0,0,.15), 0 2px 8px rgba(0,0,0,.08);
+            width: 100%;
+            overflow: hidden;
+        }
 
-    .evm-machine {
-        background: var(--card-bg);
-        border-radius: 18px;
-        box-shadow: 0 8px 40px rgba(0,0,0,.15), 0 2px 8px rgba(0,0,0,.08);
-        width: 100%;
-        overflow: hidden;
-    }
+        .evm-header {
+            color: var(--text);
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
 
-    .evm-header {
-        color: var(--text);
-        text-align: center;
-        font-size: 1.4rem;
-        font-weight: 800;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        padding: 10px 0 6px;
-    }
+        .evm-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--border);
+            background: #f8f9fb;
+        }
 
-    .evm-status {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px 16px;
-        border-bottom: 1px solid var(--border);
-        background: #f8f9fb;
-    }
+        .evm-status .status-label {
+            font-weight: 600;
+            font-size: .95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .evm-status .status-label {
-        font-weight: 600;
-        font-size: .9rem;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
+        .status-dot {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: var(--red-light);
+            transition: background .3s, box-shadow .3s;
+        }
+        .status-dot.ready {
+            background: #22c55e;
+            box-shadow: 0 0 8px #22c55e88;
+        }
+        .status-dot.blink {
+            animation: blink 0.4s ease-in-out 4;
+        }
+        @keyframes blink {
+            0%,100% { background: var(--red-light); box-shadow: none; }
+            50%      { background: var(--red-active); box-shadow: 0 0 12px var(--red-active); }
+        }
 
-    .status-dot {
-        width: 12px; height: 12px;
-        border-radius: 50%;
-        background: var(--red-light);
-        transition: background .3s, box-shadow .3s;
-    }
-    .status-dot.ready {
-        background: #22c55e;
-        box-shadow: 0 0 8px #22c55e88;
-    }
-    .status-dot.blink {
-        animation: blink 0.4s ease-in-out 4;
-    }
-    @keyframes blink {
-        0%,100% { background: var(--red-light); box-shadow: none; }
-        50%      { background: var(--red-active); box-shadow: 0 0 12px var(--red-active); }
-    }
+        .ballot-unit {
+            font-weight: 600;
+            font-size: .95rem;
+        }
 
-    .ballot-unit { font-weight: 600; font-size: .9rem; }
+        /* ── Ballot rows ── */
+        .ballot-list { width: 100%; border-collapse: collapse; }
 
-    /* ── Ballot rows ── */
-    .ballot-list { width: 100%; border-collapse: collapse; }
-    .ballot-list tr { border-bottom: 1px solid var(--border); }
-    .ballot-list tr:last-child { border-bottom: none; }
-    .ballot-list td { padding: 10px 6px; vertical-align: middle; }
+        .ballot-list tr { border-bottom: 1px solid var(--border); }
+        .ballot-list tr:last-child { border-bottom: none; }
 
-    .col-num    { width: 32px; text-align: center; color: #555; font-weight: 700; font-size: 1.1rem; }
-    .col-photo  { width: 44px; }
-    .col-symbol { width: 44px; }
-    .col-led    { width: 28px; text-align: center; }
-    .col-btn    { width: 68px; text-align: right; padding-right: 10px; }
+        .ballot-list td { padding: 14px 10px; vertical-align: middle; }
 
-    .candidate-name {
-        font-size: .95rem;
-        font-weight: 600;
-        color: var(--text);
-        line-height: 1.4;
-    }
+        .col-num  { width: 40px; text-align: center; color: #555; font-weight: 700; font-size: 1.4rem; }
+        .col-info { }
+        .col-photo { width: 52px; }
+        .col-symbol { width: 52px; }
+        .col-led  { width: 36px; text-align: center; }
+        .col-btn  { width: 80px; text-align: right; padding-right: 18px; }
 
-    .photo-avatar {
-        width: 38px; height: 38px;
-        border-radius: 4px;
-        background: transparent;
-        display: flex; align-items: center; justify-content: center;
-        overflow: hidden;
-    }
-    .photo-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .candidate-name {
+            font-size: 1 rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.4;
+        }
 
-    .symbol-icon { width: 32px; height: 32px; opacity: .75; }
+        /* candidate photo placeholder */
+        .photo-avatar {
+            width: 42px; height: 42px;
+            border-radius: 4px;
+            background: transparent;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .photo-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-    .led {
-        width: 16px; height: 16px;
-        border-radius: 50%;
-        background: var(--red-light);
-        border: 2px solid #8b1a1a;
-        margin: 0 auto;
-        transition: background .3s, box-shadow .3s;
-    }
-    .led.blink {
-        animation: ledBlink 0.4s ease-in-out 4;
-    }
-    @keyframes ledBlink {
-        0%,100% { background: var(--red-light); box-shadow: none; }
-        50%      { background: var(--red-active); box-shadow: 0 0 10px var(--red-active); }
-    }
+        /* symbol icon */
+        .symbol-icon {
+            width: 36px; height: 36px;
+            opacity: .75;
+        }
 
-    .vote-btn {
-        background: #0a2d6e;
-        color: #fff;
-        border: none;
-        border-radius: 8px;
-        padding: 10px 18px;
-        font-size: .8rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background .2s, transform .1s;
-        white-space: nowrap;
-    }
-    .vote-btn:hover  { background: #071d4a; }
-    .vote-btn:active { transform: scale(.96); }
+        /* LED */
+        .led {
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            background: var(--red-light);
+            border: 2px solid #8b1a1a;
+            margin: 0 auto;
+            transition: background .3s, box-shadow .3s;
+        }
+        .led.blink {
+            animation: ledBlink 0.4s ease-in-out 4;
+        }
+        @keyframes ledBlink {
+            0%,100% { background: var(--red-light); box-shadow: none; }
+            50%      { background: var(--red-active); box-shadow: 0 0 10px var(--red-active); }
+        }
 
-    /* Compact empty rows */
-    .compact-row td        { padding: 5px 6px; }
-    .compact-row .led      { width: 12px; height: 12px; }
-    .compact-row .vote-btn { padding: 8px 18px; }
-    .compact-row .col-num  { font-size: .8rem; }
+        /* Vote button */
+        .vote-btn {
+            background: #0a2d6e;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 24px;
+            font-size: .85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .2s, transform .1s;
+            white-space: nowrap;
+        }
+        .vote-btn:hover  { background: #071d4a; }
+        .vote-btn:active { transform: scale(.96); }
 
-    /* ── Footer ── */
-    .evm-footer {
-        padding: 12px 16px;
-        background: #f8f9fb;
-        border-top: 1px solid var(--border);
-        text-align: center;
-    }
-    .share-btn {
-        background: var(--teal);
-        color: #fff;
-        border: none;
-        border-radius: 30px;
-        padding: 11px 28px;
-        font-size: .95rem;
-        font-weight: 700;
-        cursor: pointer;
-        letter-spacing: .5px;
-        transition: background .2s;
-        width: 100%;
-    }
-    .share-btn:hover { background: #0f7a72; }
+        /* Empty candidate rows */
+        .empty-row td.col-info { min-height: 52px; }
 
-    /* ── Confirmation page ── */
-    .confirmation-wrap {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        background: #f0f2f5;
-    }
-    .vvpat-machine { position: relative; width: 260px; }
-    .vvpat-slip {
-        position: absolute;
-        top: 38%; left: 50%;
-        transform: translateX(-50%);
-        background: #fff;
-        border: 1px solid #bbb;
-        padding: 10px 14px;
-        font-size: .75rem;
-        font-weight: 700;
-        text-align: center;
-        line-height: 1.5;
-        animation: slipDrop 1s ease-out forwards;
-    }
-    @keyframes slipDrop {
-        from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-        to   { opacity: 1; transform: translateX(-50%) translateY(0); }
-    }
+        /* ── Share button ── */
+        .evm-footer {
+            padding: 18px 24px;
+            background: #f8f9fb;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .share-btn {
+            background: var(--teal);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 13px 36px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: .5px;
+            transition: background .2s;
+        }
+        .share-btn:hover { background: #0f7a72; }
 
-    /* ── Success page ── */
-    .success-wrap {
-        text-align: center;
-        max-width: 400px;
-        width: 100%;
-        padding: 12px;
-    }
-    .success-title {
-        font-size: 1.3rem; font-weight: 800;
-        color: var(--evm-blue); margin-bottom: 4px;
-    }
-    .success-subtitle {
-        font-size: 1.1rem; font-weight: 700;
-        color: var(--purple); margin-bottom: 20px;
-    }
-    .voted-card {
-        background: #fff;
-        border-radius: 16px;
-        border: 2px solid var(--purple);
-        padding: 20px 16px 18px;
-        box-shadow: 0 4px 24px rgba(124,58,237,.12);
-        margin-bottom: 10px;
-    }
-    .voted-card img.cand-photo {
-        width: 110px; height: 110px;
-        border-radius: 8px; object-fit: cover; margin-bottom: 10px;
-    }
-    .voted-badge {
-        display: inline-flex; align-items: center; gap: 6px;
-        background: var(--success); color: #fff;
-        border-radius: 20px; padding: 5px 14px;
-        font-size: .85rem; font-weight: 700; margin-bottom: 12px;
-    }
-    .voted-name {
-        font-size: 1.15rem; font-weight: 700;
-        color: var(--text); margin-bottom: 12px;
-    }
-    .vote-again-btn {
-        display: inline-flex; align-items: center; gap: 8px;
-        background: #fff; border: 2px solid var(--success);
-        color: var(--success); border-radius: 30px;
-        padding: 11px 28px; font-size: .95rem; font-weight: 700;
-        cursor: pointer; text-decoration: none;
-        transition: background .2s, color .2s; margin-top: 4px;
-    }
-    .vote-again-btn:hover { background: var(--success); color: #fff; }
-
-    @keyframes votedPop {
-        0%   { opacity: 0; transform: scale(0.3) rotate(-10deg); }
-        70%  { transform: scale(1.15) rotate(2deg); }
-        100% { opacity: 1; transform: scale(1) rotate(0deg); }
-    }
-    .voted-badge svg polyline {
-        stroke-dasharray: 30; stroke-dashoffset: 30;
-        animation: tickDraw 0.4s ease 0.4s forwards;
-    }
-    @keyframes tickDraw { to { stroke-dashoffset: 0; } }
-
-    /* ── VVPAT ── */
-    .vvpat-screen {
-        position: absolute;
-        top: 17%; left: 45%;
-        transform: translateX(-50%);
-        width: 68px; height: 65px;
-        overflow: hidden; background: #fff; border: 1px solid #bbb;
-    }
-    .vvpat-ticker {
-        display: block;
-        font-size: .62rem; font-weight: 700; line-height: 1.4;
-        text-align: center; white-space: normal; word-break: break-word;
-        animation: tickerScrollV 4s linear infinite;
-    }
-    @keyframes tickerScrollV {
-        0%   { transform: translateY(28px); }
-        100% { transform: translateY(-100%); }
-    }
-
-    /* ══════════════════════════════════════════
-       MOBILE  — fit entire ballot on one screen
-    ══════════════════════════════════════════ */
-    @media (max-width: 480px) {
-
-    body {
-        height: 100dvh;
-        padding: 6px;
-        align-items: flex-start;
-        overflow: hidden;
-    }
-
-    .evm-wrapper {
-        height: calc(100dvh - 12px);
-        gap: 4px;
-        justify-content: flex-start;
-        width: 100%;
-    }
-
-    .evm-header {
-        font-size: 1.1rem;
-        letter-spacing: 2px;
-        padding: 6px 0 4px;
-        flex-shrink: 0;
-        width: 100%;
-        text-align: center;
-    }
-
-    .evm-machine {
-        flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
-        border-radius: 16px;
-        width: 100%;
-        overflow: hidden;
-        min-height: 0;
-    }
-
-    .evm-status {
-        padding: 8px 14px;
-        flex-shrink: 0;
-    }
-    .evm-status .status-label { font-size: .85rem; gap: 6px; font-weight: 700; }
-    .ballot-unit               { font-size: .85rem; font-weight: 700; }
-    .status-dot                { width: 12px; height: 12px; }
-
-    /* Table fills remaining space */
-    .ballot-list {
-        flex: 1 1 auto;
-        display: table;
-        width: 100%;
-        min-height: 0;
-        table-layout: fixed;
-        border-collapse: collapse;
-    }
-
-    .ballot-list tbody {
-        display: table-row-group;
-    }
-
-    /* ALL rows — even height, no flex tricks */
-    .ballot-list tr {
-        display: table-row;
-        height: auto;
-    }
-
-    .ballot-list td {
-        display: table-cell;
-        vertical-align: middle;
-        padding: 4px 3px;
-    }
-
-    /* Column widths */
-    .col-num    { width: 28px; font-size: .8rem; text-align: center; padding-left: 5px !important; }
-    .col-info   { }
-    .col-photo  { width: 36px; }
-    .col-symbol { width: 36px; }
-    .col-led    { width: 24px; text-align: center; }
-    .col-btn    { width: 60px; text-align: right; padding-right: 6px !important; }
-
-    /* Empty rows */
-    .compact-row td { padding: 5px 3px; }
-    .compact-row .led {
-        width: 12px; height: 12px; border-width: 1px;
-    }
-    .compact-row .vote-btn {
-        padding: 7px 6px;
-        font-size: .6rem;
-        border-radius: 6px;
-        width: 100%;
-    }
-    .compact-row .col-num { font-size: .72rem; }
-
-    /* Candidate photo avatar in empty rows — hide */
-    .compact-row .photo-avatar { display: none; }
-
-    /* Candidate row 7 */
-    #row-1 td { padding: 6px 3px; }
-
-    #row-1 .photo-avatar {
-        width: 40px !important;
-        height: 40px !important;
-        border-radius: 4px;
-    }
-
-    #row-1 td.col-symbol img {
-        width: 34px !important;
-        height: 34px !important;
-    }
-
-    #row-1 .candidate-name {
-        font-size: .82rem;
-        line-height: 1.3;
-    }
-
-    #row-1 td.col-info div:not(.candidate-name) {
-        font-size: .62rem !important;
-        color: #666;
-        margin-top: 1px;
-    }
-
-    #row-1 .led { width: 14px; height: 14px; }
-
-    #row-1 .vote-btn {
-        padding: 9px 6px;
-        font-size: .68rem;
-        border-radius: 7px;
-        width: 100%;
-    }
-
-    /* Footer */
-    .evm-footer {
-        padding: 8px 12px;
-        flex-shrink: 0;
-    }
-    .share-btn {
-        font-size: .82rem;
-        padding: 10px 14px;
-        border-radius: 22px;
-    }
-}
-    /* Extra-small phones (≤ 360 px) */
-    @media (max-width: 360px) {
-    .evm-header { font-size: .9rem; letter-spacing: 1.5px; }
-    .col-num    { width: 22px; font-size: .68rem; }
-    .col-btn    { width: 52px; }
-    .compact-row .vote-btn { font-size: .55rem; padding: 6px 4px; }
-    .share-btn  { font-size: .72rem; }
-    #row-1 .candidate-name   { font-size: .74rem; }
-    #row-1 .photo-avatar     { width: 34px !important; height: 34px !important; }
-    #row-1 td.col-symbol img { width: 28px !important; height: 28px !important; }
-    #row-1 .vote-btn         { padding: 8px 4px; font-size: .62rem; }
-}
-
-
-        .page { display: none; }
-        .page.active {
-    display: flex;
-    width: 100%;
-    height: 100dvh;
-}
-
+        /* ── Confirmation page ── */
         .confirmation-wrap {
-            width: 100%;
-            min-height: 100vh;
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            min-height: 100vh;
             background: #f0f2f5;
+        }
+        .vvpat-machine {
+            position: relative;
+            width: 280px;
+        }
+        .vvpat-slip {
+            position: absolute;
+            top: 38%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            border: 1px solid #bbb;
+            padding: 10px 14px;
+            font-size: .75rem;
+            font-weight: 700;
+            text-align: center;
+            line-height: 1.5;
+            animation: slipDrop 1s ease-out forwards;
+        }
+        @keyframes slipDrop {
+            from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            to   { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
 
+        /* ── Success page ── */
         .success-wrap {
+            text-align: center;
+            max-width: 400px;
             width: 100%;
-            min-height: 100vh;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #f0f2f5;
-            padding: 12px;
         }
+        .success-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--evm-blue);
+            margin-bottom: 6px;
+        }
+        .success-subtitle {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--purple);
+            margin-bottom: 28px;
+        }
+        .voted-card {
+            background: #fff;
+            border-radius: 16px;
+            border: 2px solid var(--purple);
+            padding: 28px 20px 24px;
+            box-shadow: 0 4px 24px rgba(124,58,237,.12);
+            margin-bottom: 10px;
+        }
+        .voted-card img.cand-photo {
+            width: 130px; height: 130px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .voted-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--success);
+            color: #fff;
+            border-radius: 20px;
+            padding: 6px 18px;
+            font-size: .9rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        .voted-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+        .vote-again-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            border: 2px solid var(--success);
+            color: var(--success);
+            border-radius: 30px;
+            padding: 12px 32px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background .2s, color .2s;
+        }
+        .vote-again-btn:hover { background: var(--success); color: #fff; }
+
+        @keyframes votedPop {
+            0%   { opacity: 0; transform: scale(0.3) rotate(-10deg); }
+            70%  { transform: scale(1.15) rotate(2deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        .voted-badge svg polyline {
+            stroke-dasharray: 30;
+            stroke-dashoffset: 30;
+            animation: tickDraw 0.4s ease 0.4s forwards;
+        }
+
+        @keyframes tickDraw {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Compact empty rows */
+        .compact-row td {
+            padding: 6px 10px;
+        }
+        .compact-row .led {
+            width: 14px; height: 14px;
+        }
+        .compact-row .vote-btn {
+            padding: 10px 24px;   
+        }
+        .compact-row .col-num {
+            font-size: .85rem;
+        }
+
+        /* VVPAT scrolling text */
+.vvpat-screen {
+    position: absolute;
+    top: 17%;
+    left: 45%;
+    transform: translateX(-50%);
+    width: 68px;
+    height: 65px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #bbb;
+   
+}
+
+.vvpat-ticker {
+    display: block;
+    font-size: .62rem;
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: center;
+    white-space: normal;
+    word-break: break-word;
+    animation: tickerScrollV 4s linear infinite;
+}
+
+@keyframes tickerScrollV {
+    0%   { transform: translateY(28px); }   /* start: below visible area */
+    100% { transform: translateY(-100%); }  /* end: fully scrolled above */
+}
     </style>
 </head>
 <body>
